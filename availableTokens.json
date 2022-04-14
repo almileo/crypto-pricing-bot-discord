@@ -1,0 +1,30 @@
+{
+    "token": [
+        {
+            "name": "safuu",
+            "chainId": "bsc",
+            "pairAddress": "0xf5D9b8947b11DdF5eE33374cC2865E775EBE00Dc"
+        },
+        {
+            "name": "cronode",
+            "chainId": "cronos",
+            "pairAddress": "0x3Ca50D07B1cfb4a4e61EE8d00c2eF1af6E42CEE8"
+        },{
+            "name": "vapor",
+            "chainId": "avalanche",
+            "pairAddress": "0x4cd20F3e2894Ed1A0F4668d953a98E689c647bfE"
+        },{
+            "name": "leviathan",
+            "chainId": "bsc",
+            "pairAddress": "0x7E99b9c306A5d948B59536E9ae1b67D7096eC34b"
+        },{
+            "name": "grease",
+            "chainId": "avalanche",
+            "pairAddress": "0x8fd6b77123D48BfdF4D3912cef54570Ce612D3A2"
+        },{
+            "name": "spooky",
+            "chainId": "fantom",
+            "pairAddress": "0xec7178f4c41f346b2721907f5cf7628e388a7a58"
+        }
+    ]
+}
