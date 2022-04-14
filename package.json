@@ -1,0 +1,21 @@
+{
+  "name": "discrod-pricing-bot",
+  "version": "1.0.0",
+  "description": "A discrod bot for crypto token pricing",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "crypto",
+    "token"
+  ],
+  "author": "Leonardo Almiron - Metacrypto",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0"
+  }
+}
