@@ -15,7 +15,7 @@
   "author": "Leonardo Almiron - Metacrypto",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^13.6.0",
+    "discord.js": "^12.5.3",
     "dotenv": "^16.0.0"
   }
 }
