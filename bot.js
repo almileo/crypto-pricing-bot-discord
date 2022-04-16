@@ -44,7 +44,7 @@ bot.on('message', async (msg) => {
         try {
             //check if token requested exist
             if(!tokenRequested) {
-                return msg.reply('Please check the name of the token. It should be listed in !token command. Example "!price <token>"');
+                return msg.reply('Please check the name of the token. It should be listed in !token command. Example "!price <token_name>"');
             }
 
             const chainId = tokenRequested.chainId; //Look for chainId in json file.
@@ -58,7 +58,7 @@ bot.on('message', async (msg) => {
             
         } catch (error) {
             console.log('error: ', error);
-            return msg.reply('Please check your inputs. The token has to be listed in !token command. Example "!price <token>"');
+            return msg.reply('Please check your inputs. The token has to be listed in !token command. Example "!price <token_name>"');
         }
     }
 
@@ -70,6 +70,16 @@ bot.on('message', async (msg) => {
         console.log('tokenList: ', tokenList);
         return msg.reply(`The tokens availables are: ${tokenList}.`);
     }
+
+    if (message.content.startsWith('!help')) {
+        return message.reply(
+          `I support 4 commands:\n
+          !ping - To check if I am working\n
+          !price <token_name> - To get the price of a token with respect to $USD\n
+          !token - To get the list of the token availables. To add token please send DM to metaCrypt0\n
+          !help - For checking out what commands are available`
+        );
+      }
 
 })
 
