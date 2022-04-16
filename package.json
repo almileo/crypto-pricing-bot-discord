@@ -4,7 +4,8 @@
   "description": "A discrod bot for crypto token pricing",
   "main": "bot.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node bot.js"
   },
   "keywords": [
     "discord",
