@@ -25,6 +25,14 @@
             "name": "spooky",
             "chainId": "fantom",
             "pairAddress": "0xec7178f4c41f346b2721907f5cf7628e388a7a58"
+        },{
+            "name": "sphere",
+            "chainId": "polygon",
+            "pairAddress": "0xf305242c46Cfa2A07965eFBD68B167C99173B496"
+        },{
+            "name": "drip",
+            "chainId": "bsc",
+            "pairAddress": "0xa0feb3c81a36e885b6608df7f0ff69db97491b58"
         }
     ]
 }

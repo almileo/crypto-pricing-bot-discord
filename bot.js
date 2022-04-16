@@ -31,9 +31,9 @@ bot.on('message', async (msg) => {
 
     //'!price' command
     if (msg.content.startsWith('!price')) {
-        const [command, ...args] = msg.content.split(' ');
+        const [command, args] = msg.content.split(' ');
         console.log('args: ', args);
-        const [tokenMsg] = args;
+        const tokenMsg = args.toLowerCase();
         console.log('tokenMsg: ', tokenMsg);
         //Look for the coincidence in the json file.
         const tokenRequested = availableTokens.token.find((t) => {
@@ -44,7 +44,7 @@ bot.on('message', async (msg) => {
         try {
             //check if token requested exist
             if(!tokenRequested) {
-                return msg.reply('Please check the name of the token. It should be listed in !token command');
+                return msg.reply('Please check the name of the token. It should be listed in !token command. Example "!price <token>"');
             }
 
             const chainId = tokenRequested.chainId; //Look for chainId in json file.
@@ -58,8 +58,17 @@ bot.on('message', async (msg) => {
             
         } catch (error) {
             console.log('error: ', error);
-            return msg.reply('Please check your inputs. The token has to be listed in !token command');
+            return msg.reply('Please check your inputs. The token has to be listed in !token command. Example "!price <token>"');
         }
+    }
+
+    if (msg.content.startsWith('!token')) {
+        const tokenList = [];
+        availableTokens.token.forEach((t) => {
+            tokenList.push(` ${t.name}  `);
+        });
+        console.log('tokenList: ', tokenList);
+        return msg.reply(`The tokens availables are: ${tokenList}.`);
     }
 
 })
