@@ -3,6 +3,19 @@ const { Client } = require('discord.js');
 const dotenv = require('dotenv');
 const axios = require('axios');
 const availableTokens = require('./availableTokens.json');
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+    res.status(200).send('The server is running').end();
+})
+
+const PORT = process.env.PORT || 3001;
+
+app.listen(PORT, () => {
+    console.log('Server is running');
+    console.log(`App listening on port ${PORT}`);
+})
 
 //Load env
 dotenv.config();
