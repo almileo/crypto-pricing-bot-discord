@@ -71,8 +71,8 @@ bot.on('message', async (msg) => {
         return msg.reply(`The tokens availables are: ${tokenList}.`);
     }
 
-    if (message.content.startsWith('!help')) {
-        return message.reply(
+    if (msg.content.startsWith('!help')) {
+        return msg.reply(
           `I support 4 commands:\n
           !ping - To check if I am working\n
           !price <token_name> - To get the price of a token with respect to $USD\n
