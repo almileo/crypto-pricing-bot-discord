@@ -75,24 +75,31 @@ bot.on('message', async (msg) => {
         }
     }
 
+    //!token command
     if (msg.content.startsWith('!token')) {
         const tokenList = [];
         availableTokens.token.forEach((t) => {
             tokenList.push(` ${t.name}  `);
         });
         console.log('tokenList: ', tokenList);
-        return msg.reply(`The tokens availables are: ${tokenList}.`);
+        return msg.reply(`The tokens availables are: ${tokenList}`);
     }
 
+    //!help command
     if (msg.content.startsWith('!help')) {
         return msg.reply(
-          `I support 4 commands:\n
+          `I support 5 commands:\n
           !ping - To check if I am working\n
           !price <token_name> - To get the price of a token with respect to $USD\n
           !token - To get the list of the token availables. To add token please send DM to metaCrypt0\n
-          !help - For checking out what commands are available`
+          !help - For checking out what commands are available\n
+          !donate - Display my address if you want to support the project`
         );
       }
 
-})
+    if (msg.content.startsWith('!donate')) {
+        return msg.reply(`Thank you for your support. If you want to donate to the project the address is 0x454DD1022846b85EceFcFb5E397B4BBEc0965059 in BNB Smart Chain`);
+    }
+
+});
 
