@@ -20,13 +20,15 @@ app.listen(PORT, () => {
 //Load env
 dotenv.config();
 
+setInterval(async () => {
+    await axios.get(`https://crypto-pricing-discord-bot.herokuapp.com/`);
+}, 900000); // 15 minutes
+
 //Create bot instance
 const bot = new Client();
 
 //Bot login
 bot.login(process.env.DISCORD_BOT_TOKEN);
-
-
 
 //First command - '!ping'
 bot.on('ready', () => {
@@ -102,4 +104,22 @@ bot.on('message', async (msg) => {
     }
 
 });
+
+
+setInterval(async () => {
+    const channel = await bot.channels.fetch('963951792226467883');
+    // console.log('channel: ', channel);
+    const safuuData = await axios.get(`https://api.dexscreener.io/latest/dex/pairs/bsc/0xf5d9b8947b11ddf5ee33374cc2865e775ebe00dc`);
+    console.log('safuuData: ', safuuData.data.pair.priceUsd);
+    if(safuuData.data.pair.priceUsd > 250) {
+        channel.send('SAFUU is over $250');
+    }
+
+    if(safuuData.data.pair.priceUsd < 170 ) {
+        channel.send('SAFUU is under $170');
+    }
+}, 300000);// 5 minutes
+
+
+
 
