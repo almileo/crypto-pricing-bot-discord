@@ -3,6 +3,7 @@ const { Client } = require('discord.js');
 const dotenv = require('dotenv');
 const axios = require('axios');
 const availableTokens = require('./availableTokens.json');
+const commands = require('./commands');
 const express = require('express');
 const app = express();
 
@@ -36,18 +37,32 @@ bot.on('ready', () => {
 });
 
 bot.on('message', async (msg) => {
+    console.log('msg: ', msg.content);
+    const msgSplitted = msg.content.split(' ');
+    let commandTyped = msgSplitted[0];
+
     if (msg.author.bot) { //Do not reply if message is sent from bot
         return
     }
+    const command = commands.commandsArr.find((c) => {
+        return c === commandTyped
+    })
+
+    if (!command) {
+        return msg.reply('The command should be listed in "!help"')
+    }
 
     if (msg.content.startsWith('!ping')) {
-        return msg.reply('I am working fine');
+        return msg.reply('Do not worry, I am working fine');
     }
 
     //'!price' command
     if (msg.content.startsWith('!price')) {
         const [command, args] = msg.content.split(' ');
         console.log('args: ', args);
+        if(!args) {
+            return msg.reply('The command should be "!price <token_name>". Remember the token should be listed in "!token"');
+        }
         const tokenMsg = args.toLowerCase();
         console.log('tokenMsg: ', tokenMsg);
         //Look for the coincidence in the json file.
