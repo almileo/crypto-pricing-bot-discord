@@ -4,7 +4,9 @@ const dotenv = require('dotenv');
 const axios = require('axios');
 const availableTokens = require('./availableTokens.json');
 const commands = require('./commands');
+require('./constants');
 const express = require('express');
+const { METACRYPT0_SERVER_ID, FIVE_MINUTES, FIFTEEN_MINUTES } = require('./constants');
 const app = express();
 
 app.get('/', (req, res) => {
@@ -23,7 +25,9 @@ dotenv.config();
 
 setInterval(async () => {
     await axios.get(`https://crypto-pricing-discord-bot.herokuapp.com/`);
-}, 900000); // 15 minutes
+}, FIFTEEN_MINUTES); // 15 minutes
+
+let priceAlert = [];
 
 //Create bot instance
 const bot = new Client();
@@ -47,6 +51,7 @@ bot.on('message', async (msg) => {
     const command = commands.commandsArr.find((c) => {
         return c === commandTyped
     })
+    console.log('command: ', command);
 
     if (!command) {
         return msg.reply('The command should be listed in "!help"')
@@ -110,19 +115,43 @@ bot.on('message', async (msg) => {
           !price <token_name> - To get the price of a token with respect to $USD\n
           !token - To get the list of the token availables. To add token please send DM to metaCrypt0\n
           !help - For checking out what commands are available\n
-          !donate - Display my address if you want to support the project`
+          !donate - Display my address if you want to support the project\n
+          !set_alert <token_name> <price_alert> <time> - To set a price alert of a listed token for a period of time.`
         );
       }
 
+    //!donate command  
     if (msg.content.startsWith('!donate')) {
         return msg.reply(`Thank you for your support. If you want to donate to the project the address is 0x454DD1022846b85EceFcFb5E397B4BBEc0965059 in BNB Smart Chain`);
     }
 
+    //!price_alert command
+    if(msg.content.startsWith('!set_alert')) {
+        const [command, ...args] = msg.content.split(' ');
+        console.log('args: ', args);
+        // console.log('msg - user: ', msg.author);
+        const tokenMsg = args[0].toLowerCase();
+        console.log('tokenMsg: ', tokenMsg);
+        const tokenRequested = availableTokens.token.find((t) => {
+           return t.name == tokenMsg;
+        });
+        if(!tokenRequested) {
+            return msg.reply('Please check the name of the token. It should be listed in !token command. Example "!price <token_name>"');
+        }
+        console.log('tokenRequested: ', tokenRequested);
+        
+        priceAlert.push({token: tokenRequested, price_alert: parseFloat(args[1]), time: parseFloat(args[2]), user_id: msg.author.id, username: msg.author.username});
+        return msg.reply('ok estoy funcando el price alert');
+    }
+    
 });
 
 
+console.log('priceAlert: ', priceAlert);
+
+
 setInterval(async () => {
-    const channel = await bot.channels.fetch('963951792226467883');
+    const channel = await bot.channels.fetch(METACRYPT0_SERVER_ID);
     // console.log('channel: ', channel);
     const safuuData = await axios.get(`https://api.dexscreener.io/latest/dex/pairs/bsc/0xf5d9b8947b11ddf5ee33374cc2865e775ebe00dc`);
     console.log('safuuData: ', safuuData.data.pair.priceUsd);
@@ -133,7 +162,17 @@ setInterval(async () => {
     if(safuuData.data.pair.priceUsd < 170 ) {
         channel.send('SAFUU is under $170');
     }
-}, 300000);// 5 minutes
+
+    priceAlert.forEach(async (t) => {
+        const user = await bot.users.fetch(t.user_id)
+        const tokenAlert = await axios.get(`https://api.dexscreener.io/latest/dex/pairs/${t.token.chainId}/${t.token.pairAddress}`);
+        console.log('tokenAlert: ', tokenAlert.data);
+        if(tokenAlert.data.pair.priceUsd > t.price_alert) {
+            user.send(`The price of ${tokenAlert.data.pair.baseToken.symbol} has exeed your alert $ ${t.price_alert}`)
+        }
+    })
+
+}, FIVE_MINUTES);// 5 minutes
 
 
 

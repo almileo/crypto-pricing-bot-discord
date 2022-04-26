@@ -3,5 +3,6 @@ exports.commandsArr = [
     '!price',
     '!token',
     '!help',
-    '!donate'
+    '!donate',
+    '!set_alert'
 ]
