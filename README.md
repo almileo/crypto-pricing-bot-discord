@@ -1,6 +1,6 @@
 # Crypo Pricing Discord Bot
 
-CPDB is a small project to learn about Node.JS. Is a Discord bot (using discord.js) which has 5 commands, depending the command is the response of the bot. 
+CPDB is a small project to learn about Node.JS. Is a Discord bot (using discord.js) which has 6 commands, depending the command is the response of the bot. 
 
 In the future I plan to upgrade the bot adding new features.
 
@@ -19,6 +19,8 @@ When the bot is on line, you can use the !help command to see the list of comman
 !help - For checking out what commands are available
 
 !donate - Display my address if you want to support the project (buymeacoffe link in near future)
+
+!set_alert <token_name> <price_alert> <time> - To set a price alert of a listed token for a period of time.
 
 ## Badges
 
